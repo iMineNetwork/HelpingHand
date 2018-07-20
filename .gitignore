@@ -1,0 +1,12 @@
+.gradle/
+.idea/
+out/
+lib/
+build/
+classes/
+
+*.iml
+*.ipr
+*.iws
+testStoragePath.json
+gradle.properties
