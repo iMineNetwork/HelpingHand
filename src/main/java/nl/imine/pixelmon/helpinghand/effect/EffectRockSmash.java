@@ -11,8 +11,10 @@ import java.util.Collections;
 
 public class EffectRockSmash extends EffectBreakBlock {
 
+    public static final String MOVE_NAME_ROCK_SMASH = "Rock Smash";
+
     public EffectRockSmash(BadgeDataProvider badgeDataProvider) {
-        super(badgeDataProvider, AttackBase.getAttackBase("cut").orElseThrow(() -> new IllegalStateException("Move not found")), Collections.singletonList(BlockTree.getBlockFromName("pixelmon:boulder")));
+        super(badgeDataProvider, AttackBase.getAttackBase(MOVE_NAME_ROCK_SMASH).orElseThrow(() -> new IllegalStateException("The AttackBase for move '" + MOVE_NAME_ROCK_SMASH + "' could not be found")), Collections.singletonList(BlockTree.getBlockFromName("pixelmon:boulder")));
     }
 
     @Override

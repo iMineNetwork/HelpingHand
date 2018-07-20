@@ -11,8 +11,10 @@ import java.util.Collections;
 
 public class EffectCut extends EffectBreakBlock {
 
+    public static final String MOVE_NAME_CUT = "Cut";
+
     public EffectCut(BadgeDataProvider badgeDataProvider) {
-        super(badgeDataProvider, AttackBase.getAttackBase("cut").orElseThrow(() -> new IllegalStateException("Move not found")), Collections.singletonList(Block.getBlockFromName("pixelmon:tree")));
+        super(badgeDataProvider, AttackBase.getAttackBase(MOVE_NAME_CUT).orElseThrow(() -> new IllegalStateException("The AttackBase for move '" + MOVE_NAME_CUT + "' could not be found")), Collections.singletonList(Block.getBlockFromName("pixelmon:tree")));
     }
 
     @Override

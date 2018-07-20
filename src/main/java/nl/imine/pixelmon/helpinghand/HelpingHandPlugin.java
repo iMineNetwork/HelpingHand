@@ -16,7 +16,6 @@ import nl.imine.pixelmon.helpinghand.util.ExternalMoveRegistryEditor;
 @IFMLLoadingPlugin.DependsOn("pixelmon")
 public class HelpingHandPlugin {
 
-
     @Mod.EventHandler
     public void onServerStartEvent(FMLInitializationEvent gameStartingServerEvent) {
         ExternalMoveRegistryEditor externalMoveRegistryEditor = new ExternalMoveRegistryEditor();

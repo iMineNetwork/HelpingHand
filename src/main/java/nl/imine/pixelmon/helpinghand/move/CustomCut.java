@@ -4,6 +4,7 @@ import com.pixelmonmod.pixelmon.blocks.multiBlocks.BlockTree;
 import com.pixelmonmod.pixelmon.entities.pixelmon.EntityPixelmon;
 import com.pixelmonmod.pixelmon.entities.pixelmon.externalMoves.Cut;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -23,10 +24,13 @@ public class CustomCut extends Cut {
             return false;
         BlockPos pos = target.getBlockPos();
         Block block = pixelmon.world.getBlockState(pos).getBlock();
-        if (isBlockATree(block))
-            return effectCut.breakBlock(pixelmon.getOwner(), pos);
-        //TODO Send player message that this block cannot be broken by this move
+        if (isBlockATree(block) && executorIsAPlayer(pixelmon.getOwner()))
+            return effectCut.breakBlock((EntityPlayerMP) pixelmon.getOwner(), pos);
         return false;
+    }
+
+    private boolean executorIsAPlayer(EntityLivingBase owner) {
+        return owner instanceof EntityPlayerMP;
     }
 
     private boolean isOwnerAPlayer(EntityPixelmon pixelmon) {
