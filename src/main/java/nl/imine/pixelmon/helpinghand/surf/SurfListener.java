@@ -14,6 +14,6 @@ public class SurfListener {
 
 
     private boolean isSurfNpc(Entity target) {
-        return true;
+        return target.getName().equals("Surferdude Mac Wakeboard");
     }
 }
