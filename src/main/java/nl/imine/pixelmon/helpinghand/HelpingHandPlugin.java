@@ -24,7 +24,7 @@ public class HelpingHandPlugin {
         externalMoveRegistryEditor.clearExternalMoves();
         BadgeManager badgeDataProvider = new BadgeManager();
         externalMoveRegistryEditor.addCustomExternalMove(new CustomCut(new EffectCut(badgeDataProvider)));
-        SurfListener surfListener = new SurfListener();
+        SurfListener surfListener = new SurfListener(this);
         MinecraftForge.EVENT_BUS.register(surfListener);
         Pixelmon.EVENT_BUS.register(surfListener);
         Sponge.getEventManager().registerListeners(this, surfListener);

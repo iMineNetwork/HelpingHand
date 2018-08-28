@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 public class SurfPlayer {
 
     private static final Logger logger = LoggerFactory.getLogger(SurfPlayer.class);
+    private static final String POKEMON_NAME_LAPRAS = "Lapras";
 
     private final EntityPlayer player;
     private final Entity surfNpc;
@@ -39,18 +40,8 @@ public class SurfPlayer {
     }
 
     public void toggleSurfForPlayer() {
-        if (isPlayerSurfing())
-            disembarkPlayer();
-        else
+        if (!isPlayerSurfing())
             attemptEmbarkPlayer();
-    }
-
-    private void disembarkPlayer() {
-        logger.info("Disembarking Player");
-        Vec3d surfNpcPosition = surfNpc.getPositionVector();
-        ((Player) player).getVehicle().ifPresent(org.spongepowered.api.entity.Entity::clearPassengers);
-        player.setPosition(surfNpcPosition.x, surfNpcPosition.y, surfNpcPosition.z);
-        player.getEntityData().setBoolean("allowDismount", true);
     }
 
     private void attemptEmbarkPlayer() {
@@ -88,8 +79,8 @@ public class SurfPlayer {
     private void embarkPlayer(EntityPixelmon pixelmon) {
         findDirectionBlockBelowSurfNpc().ifPresent(block -> {
             EnumFacing facing = block.getValue(BlockHorizontal.FACING);
-            Vec3d locationToTeleportTo = player.getPositionVector().add(multiplyVector(facing.getDirectionVec(), new Vec3d(-3, 0, -3)));
-            EntityPixelmon entityPixelmon = spawnWildClone(pixelmon, player.getEntityWorld(), locationToTeleportTo);
+            Vec3d locationToTeleportTo = surfNpc.getPositionVector().add(multiplyVector(facing.getDirectionVec(), new Vec3d(-3, 0, -3)));
+            EntityPixelmon entityPixelmon = spawnLapras(player.getEntityWorld(), locationToTeleportTo);
             player.startRiding(entityPixelmon);
             entityPixelmon.updatePassenger(player);
         });
@@ -106,7 +97,6 @@ public class SurfPlayer {
     }
 
     private boolean isPlayerSurfing() {
-        //TODO Check surf pokemon
         return player.isRiding();
     }
 
@@ -114,8 +104,8 @@ public class SurfPlayer {
         return new Vec3d(original.getX() * product.x, original.getY() * product.y, original.getZ() * product.z);
     }
 
-    private EntityPixelmon spawnWildClone(EntityPixelmon template, World world, Vec3d location) {
-        EntityPixelmon pokemon = PokemonSpec.from(template.getPokemonName()).create(world);
+    private EntityPixelmon spawnLapras(World world, Vec3d location) {
+        EntityPixelmon pokemon = PokemonSpec.from(POKEMON_NAME_LAPRAS).create(world);
         pokemon.setPosition(location.x, location.y, location.z);
         pokemon.canDespawn = false;
         pokemon.setSpawnLocation(pokemon.getDefaultSpawnLocation());
